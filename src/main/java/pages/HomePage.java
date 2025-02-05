@@ -7,17 +7,34 @@ public class HomePage {
     private final WebDriver driver;
     private final String URL = "https://useinsider.com/";
 
+    private final By acceptCookieButton = By.id("wt-cli-accept-all-btn");
+
     public HomePage(WebDriver driver) {
-        this.driver = driver;
+        this.driver = driver; // WebDriver'ı başlatır
     }
 
     public void open() {
-        driver.get(URL);
+        driver.get(URL); // Belirtilen URL'yi tarayıcıda açar
+        acceptCookieIfPresent(); // Cookie onayını kontrol eder ve kabul eder
     }
 
+
+    // Sayfa başlığında "Insider" kelimesinin olup olmadığını kontrol eder
     public boolean isHomePageTitleDisplayed() {
         String homePageTitle = driver.getTitle();
         return homePageTitle.contains("Insider");
+    }
+
+    private void acceptCookieIfPresent() {
+        try {
+            WebElement acceptButton = driver.findElement(acceptCookieButton);
+            if (acceptButton.isDisplayed()) {
+                acceptButton.click();  // Cookie butonuna tıkla
+                System.out.println("Cookie accepted.");
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("Cookie accept button not found, no action needed.");
+        }
     }
 
 }

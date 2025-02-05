@@ -8,7 +8,7 @@ import java.time.Duration;
 public class CareersPage {
 
     private WebDriver driver;
-    private WebDriverWait wait; // Belirli elementleri beklemek için WebDriverWait
+    private WebDriverWait wait;
 
     // Career sayfasındaki blokların locator'ları
     private By locationsBlock = By.id("career-our-location");

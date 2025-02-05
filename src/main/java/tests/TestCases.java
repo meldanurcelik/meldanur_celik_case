@@ -1,10 +1,7 @@
 package tests;
 
-import pages.CareersPage;
-import pages.CompanyPage;
-import pages.HomePage;
+import pages.*;
 import org.junit.jupiter.api.*;
-import pages.QAJobsPage;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,6 +13,7 @@ public class TestCases extends BaseTest {
     private final CompanyPage companyPage = new CompanyPage(driver);
     private final CareersPage careersPage = new CareersPage(driver);
     private final QAJobsPage qaJobsPage = new QAJobsPage(driver);
+    private final OpenPositionsPage openPositionsPage = new OpenPositionsPage(driver);
 
     @Test
     @Order(1)
@@ -41,6 +39,9 @@ public class TestCases extends BaseTest {
     public void tesQAJobsPage() {
         qaJobsPage.open(); // QA Jobs sayfası açılır
         qaJobsPage.clickSeeAllQaJobsButton(); // "See all QA jobs" butonuna tıklanır
+        openPositionsPage.controlDepartment("Quality Assurance"); // Departman kontrolü yapılır
+        openPositionsPage.selectLocation("Istanbul, Turkey"); // Lokasyon seçilir
     }
+
 
 }

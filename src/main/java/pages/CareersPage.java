@@ -23,7 +23,7 @@ public class CareersPage {
     private boolean isElementDisplayed(By locator) {
         try {
             WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator)); // Elementin görünür olmasını bekler
-            return element.isDisplayed();
+            return element != null && element.isDisplayed();
         } catch (Exception e) {
             return false;
         }

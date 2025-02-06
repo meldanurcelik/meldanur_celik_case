@@ -1,7 +1,7 @@
 package pages;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
 
@@ -25,20 +25,20 @@ public class HomePage {
 
     // Sayfa başlığında "Insider" kelimesinin olup olmadığını kontrol eder
     public boolean isHomePageTitleDisplayed() {
-        String homePageTitle = driver.getTitle();
-        return homePageTitle.contains("Insider");
+        return driver.getTitle().contains("Insider");
+    }
+
+    private void clickIfVisible(By locator) {
+        try {
+            WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator)); // Elementi tıklanabilir olana kadar bekle
+            element.click();
+        } catch (TimeoutException e) {
+            System.out.println("Element not clickable: " + locator); // Eğer element tıklanabilir değilse hata mesajı
+        }
     }
 
     private void acceptCookieIfPresent() {
-        try {
-            WebElement acceptButton = driver.findElement(acceptCookieButton);
-            if (acceptButton.isDisplayed()) {
-                acceptButton.click();  // Cookie butonuna tıkla
-                System.out.println("Cookie accepted.");
-            }
-        } catch (NoSuchElementException e) {
-            System.out.println("Cookie accept button not found, no action needed.");
-        }
+        clickIfVisible(acceptCookieButton); // Cookie butonunu kabul et
     }
 
 }

@@ -21,7 +21,6 @@
             <artifactId>selenium-java</artifactId>
             <version>4.12.1</version>
         </dependency>
-
         <!-- TestNG -->
         <dependency>
             <groupId>org.testng</groupId>
@@ -61,6 +60,7 @@
             <version>3.27.2</version>
             <scope>compile</scope>
         </dependency>
+        <!-- TestNG -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>

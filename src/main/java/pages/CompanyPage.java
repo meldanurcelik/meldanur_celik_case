@@ -1,7 +1,7 @@
 package pages;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
 
@@ -20,12 +20,22 @@ public class CompanyPage {
 
     }
 
+    private void clickMenu(By menuLocator) {
+        try {
+            WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(menuLocator)); // Wait for the element to be clickable
+            menu.click(); // Click the menu
+        } catch (TimeoutException e) {
+            System.err.println("Menu not clickable: " + menuLocator); // You can log or handle the exception as needed
+        }
+    }
+
+
     public void clickCompanyMenu() {
-        driver.findElement(companyMenu).click(); // "Company" menüsüne tıklar
+        clickMenu(companyMenu); // "Company" menüsüne tıklar
     }
 
     public void clickCareersMenu() {
-        driver.findElement(careersMenu).click(); // "Careers" menüsüne tıklar
+        clickMenu(careersMenu); // "Careers" menüsüne tıklar
     }
 
 }

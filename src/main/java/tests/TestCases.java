@@ -1,8 +1,12 @@
 package tests;
 
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -39,9 +43,23 @@ public class TestCases extends BaseTest {
     public void tesQAJobsPage() {
         qaJobsPage.open(); // QA Jobs sayfası açılır
         qaJobsPage.clickSeeAllQaJobsButton(); // "See all QA jobs" butonuna tıklanır
-        openPositionsPage.controlDepartment("Quality Assurance"); // Departman kontrolü yapılır
+        openPositionsPage.isPositionListItemDisplayed(); // Lokasyon dropdown'ı görünür olup olmadığı kontrol edilir
+        openPositionsPage.validateDepartmentSelection("Quality Assurance"); // Departman kontrolü yapılır
         openPositionsPage.selectLocation("Istanbul, Turkey"); // Lokasyon seçilir
     }
 
+    @Test
+    @Order(4)
+    public void testJobApplication() {
+        openPositionsPage.clickViewRoleButton(); // İş başvurusu yapılır
+
+        // Sayfanın yüklenmesini bekleyin (Örneğin URL değişimini veya belirli bir öğenin görünmesini bekleyin)
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // 10 saniye bekleme süresi
+        wait.until(ExpectedConditions.urlContains("jobs.lever.co/useinsider")); // Lever başvuru sayfasına yönlendirilip yönlendirilmediğimizi kontrol edin
+
+        // Mevcut URL'yi doğrulayın
+        String currentUrl = driver.getCurrentUrl();
+        assertTrue(currentUrl.contains("lever.co"), "Yönlendirilen URL doğru değil: " + currentUrl);
+    }
 
 }

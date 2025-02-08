@@ -6,9 +6,9 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@TestMethodOrder(OrderAnnotation.class)
+@TestMethodOrder(OrderAnnotation.class) // OrderAnnotation is used to determine the order of the tests.
 public class TestCases extends BaseTest {
-
+    // Page objects are created
     private final HomePage homePage = new HomePage(driver);
     private final CompanyPage companyPage = new CompanyPage(driver);
     private final CareersPage careersPage = new CareersPage(driver);
@@ -18,17 +18,17 @@ public class TestCases extends BaseTest {
     @Test
     @Order(1)
     public void testHomePageIsOpen() {
-        homePage.open(); //Home page açılır
-        assertTrue(homePage.isHomePageTitleDisplayed(), "Home page title does not contain 'insider' or the homepage element is not displayed."); // Sayfa başlığının 'insider' içerdiğini ve ana sayfanın görünür olduğunu doğrular
+        homePage.open(); // The home page opens
+        assertTrue(homePage.isHomePageTitleDisplayed(), "Home page title does not contain 'insider' or the homepage element is not displayed."); // Check if the home page title contains "insider"
     }
 
     @Test
     @Order(2)
     public void testCareersPage() {
-        companyPage.clickCompanyMenu(); // "Company" menüsüne tıklanır
-        companyPage.clickCareersMenu(); // "Careers" menüsüne tıklanır
+        companyPage.clickCompanyMenu(); // Click the "Company" menu
+        companyPage.clickCareersMenu(); // Click the "Careers" menu
 
-        // Careers sayfasının yüklenip yüklenmediği kontrol edilir
+        // Check if the Careers page elements are displayed
         assertTrue(careersPage.isLocationsBlockDisplayed(), "Locations block is not visible");
         assertTrue(careersPage.isTeamsBlockDisplayed(), "Teams block is not visible");
         assertTrue(careersPage.isLifeAtInsiderBlockDisplayed(), "Life at Insider block is not visible");
@@ -36,31 +36,30 @@ public class TestCases extends BaseTest {
 
     @Test
     @Order(3)
-    public void tesQAJobsPage() {
-        qaJobsPage.open(); // QA Jobs sayfası açılır
-        qaJobsPage.clickSeeAllQaJobsButton(); // "See all QA jobs" butonuna tıklanır
-        openPositionsPage.isPositionListItemDisplayed(); // Lokasyon dropdown'ı görünür olup olmadığı kontrol edilir
-        openPositionsPage.validateDepartmentSelection("Quality Assurance"); // Departman kontrolü yapılır
-        openPositionsPage.selectLocation("Istanbul, Turkiye"); // Lokasyon seçilir
+    public void tesQAJobsPage() throws InterruptedException {
+        qaJobsPage.open(); // Open the QA Jobs page
+        qaJobsPage.clickSeeAllQaJobsButton(); // Click the "See all QA jobs" button
+        openPositionsPage.isPositionListItemDisplayed(); // Check if the position list item is displayed
+        openPositionsPage.validateDepartmentSelection("Quality Assurance"); // Check if the department selection is correct
+        openPositionsPage.selectLocation("Istanbul, Turkiye"); // Select the location
     }
 
     @Test
     @Order(4)
     public void testJobApplication() {
-        openPositionsPage.clickViewRoleButton(); // "View Role" butonuna tıklanır
+        openPositionsPage.hoverAndClickViewRoleButton(); // Click the "View role" button
 
-        String originalWindow = driver.getWindowHandle(); // Mevcut pencerenin handle'ını al
+        String originalWindow = driver.getWindowHandle(); // Get the original window handle
 
-        // Yeni pencereye geçiş yapılır ve URL kontrolü yapılır
         for (String windowHandle : driver.getWindowHandles()) {
             if (!windowHandle.equals(originalWindow)) {
-                driver.switchTo().window(windowHandle);
+                driver.switchTo().window(windowHandle); // Switch to the new window
                 break;
             }
         }
 
-        String currentUrl = driver.getCurrentUrl(); // Mevcut URL'yi alınır
-        assertTrue(currentUrl.contains("jobs.lever.co/useinsider"), "Yönlendirilen URL doğru değil: " + currentUrl);
+        String currentUrl = driver.getCurrentUrl(); // Get the current URL
+        assertTrue(currentUrl.contains("jobs.lever.co/useinsider"), "Yönlendirilen URL doğru değil: " + currentUrl); // Check if the URL is correct
     }
 
 }

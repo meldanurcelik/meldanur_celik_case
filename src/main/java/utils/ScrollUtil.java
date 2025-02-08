@@ -1,33 +1,43 @@
 package utils;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class ScrollUtil {
 
     public static void scrollToElement(WebDriver driver, By locator) {
-        WebElement element = driver.findElement(locator);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // 10 saniyelik bekleme süresi
 
-        // JavascriptExecutor kullanarak kaydırma işlemi yapılır
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", element);
-
-        // Elementin üzerine tıklama işlemi veya başka işlemler yapılmadan önce biraz beklemek faydalı olabilir
         try {
-            Thread.sleep(2000); // Kaydırma sonrası biraz bekle (opsiyonel)
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator)); // Elementin görünmesini bekle
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element); // Elementi ortala
+        } catch (TimeoutException e) {
+            System.out.println("Element bulunamadı veya görünür değil: " + locator);
         }
+
+       // WebElement element = driver.findElement(locator); // Find the element
+       // JavascriptExecutor js = (JavascriptExecutor) driver; // Create a JavascriptExecutor object
+       // js.executeScript("arguments[0].scrollIntoView(true);", element); // Scroll to the element
+        //
+       // try {
+       //     Thread.sleep(1000);
+       // } catch (InterruptedException e) {
+       //     e.printStackTrace();
+       // }
+
     }
 
     public static void scrollDown(WebDriver driver) {
-        // Sayfayı aşağıya kaydırmak için
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0, 250);");
     }
 
     public static void scrollUp(WebDriver driver) {
-        // Sayfayı yukarıya kaydırmak için
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0, -250);");
     }
+
 }

@@ -17,11 +17,11 @@ import java.time.format.DateTimeFormatter;
 
 public class BaseTest {
 
-    protected static WebDriver driver;
+    protected static WebDriver driver; // WebDriver is protected so that it can be accessed by subclasses
 
     @BeforeAll
     public static void setup() {
-        String browser = System.getProperty("browser", "chrome");
+        String browser = System.getProperty("browser", "chrome"); // Select the browser from system properties, otherwise use Chrome as default
 
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
@@ -33,27 +33,27 @@ public class BaseTest {
             throw new IllegalArgumentException("Geçersiz tarayıcı: " + browser);
         }
 
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize(); // Make the window full screen
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // Set the implicit wait time to 10 seconds
     }
 
     @AfterEach
     public void takeScreenshotOnFailure(TestInfo testInfo) {
         if (driver != null) {
-            // @AfterEach her testten sonra çalışır ve her testten sonra ekran görüntüsü alınır
-            // TestInfo nesnesi, test hakkında bilgi sağlar
-            // Test başarısız olursa ekran görüntüsü alınır
+            // @AfterEach runs after each test and screenshots are taken after each test
+            // The TestInfo object provides information about the test
+            // If the test fails, a screenshot is taken
             TakesScreenshot ts = (TakesScreenshot) driver; // Ekran görüntüsü almak için WebDriver'ı dönüştür
-            File srcFile = ts.getScreenshotAs(OutputType.FILE); // Ekran görüntüsünü al
-            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")); // Zaman damgası oluştur
-            String testName = testInfo.getDisplayName().replace(" ", "_"); // Test adını al ve boşlukları alt çizgi ile değiştir
-            File destFile = new File("Screenshots/" + testName + "_" + timestamp + ".png"); // Ekran görüntüsünü kaydetmek için dosya adı oluştur
+            File srcFile = ts.getScreenshotAs(OutputType.FILE); // Take a screenshot
+            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")); // Get the current time as a timestamp
+            String testName = testInfo.getDisplayName().replace(" ", "_"); // Get the test name and replace spaces with underscores
+            File destFile = new File("Screenshots/" + testName + "_" + timestamp + ".png"); // Create a file path for the screenshot
 
             try {
-                FileUtils.copyFile(srcFile, destFile); // Ekran görüntüsünü kaydet
-                System.out.println("Ekran görüntüsü kaydedildi: " + destFile.getAbsolutePath()); // Ekran görüntüsünün kaydedildiği yolu yazdır
+                FileUtils.copyFile(srcFile, destFile); // Save the screenshot to the file path
+                System.out.println("Ekran görüntüsü kaydedildi: " + destFile.getAbsolutePath()); // Print the file path
             } catch (IOException e) {
-                System.err.println("Ekran görüntüsü kaydedilirken hata oluştu: " + e.getMessage()); // Hata durumunda hata mesajı yazdır
+                System.err.println("Ekran görüntüsü kaydedilirken hata oluştu: " + e.getMessage()); // Print an error message if the screenshot fails
             }
         }
     }
@@ -61,7 +61,7 @@ public class BaseTest {
     @AfterAll
     public static void teardown() {
         if (driver != null) {
-            driver.quit();
+            driver.quit(); // Close the browser
         }
     }
 

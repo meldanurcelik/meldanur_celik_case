@@ -1,12 +1,8 @@
 package tests;
 
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-
-import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -45,21 +41,26 @@ public class TestCases extends BaseTest {
         qaJobsPage.clickSeeAllQaJobsButton(); // "See all QA jobs" butonuna tıklanır
         openPositionsPage.isPositionListItemDisplayed(); // Lokasyon dropdown'ı görünür olup olmadığı kontrol edilir
         openPositionsPage.validateDepartmentSelection("Quality Assurance"); // Departman kontrolü yapılır
-        openPositionsPage.selectLocation("Istanbul, Turkey"); // Lokasyon seçilir
+        openPositionsPage.selectLocation("Istanbul, Turkiye"); // Lokasyon seçilir
     }
 
     @Test
     @Order(4)
     public void testJobApplication() {
-        openPositionsPage.clickViewRoleButton(); // İş başvurusu yapılır
+        openPositionsPage.clickViewRoleButton(); // "View Role" butonuna tıklanır
 
-        // Sayfanın yüklenmesini bekleyin (Örneğin URL değişimini veya belirli bir öğenin görünmesini bekleyin)
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // 10 saniye bekleme süresi
-        wait.until(ExpectedConditions.urlContains("jobs.lever.co/useinsider")); // Lever başvuru sayfasına yönlendirilip yönlendirilmediğimizi kontrol edin
+        String originalWindow = driver.getWindowHandle(); // Mevcut pencerenin handle'ını al
 
-        // Mevcut URL'yi doğrulayın
-        String currentUrl = driver.getCurrentUrl();
-        assertTrue(currentUrl.contains("lever.co"), "Yönlendirilen URL doğru değil: " + currentUrl);
+        // Yeni pencereye geçiş yapılır ve URL kontrolü yapılır
+        for (String windowHandle : driver.getWindowHandles()) {
+            if (!windowHandle.equals(originalWindow)) {
+                driver.switchTo().window(windowHandle);
+                break;
+            }
+        }
+
+        String currentUrl = driver.getCurrentUrl(); // Mevcut URL'yi alınır
+        assertTrue(currentUrl.contains("jobs.lever.co/useinsider"), "Yönlendirilen URL doğru değil: " + currentUrl);
     }
 
 }

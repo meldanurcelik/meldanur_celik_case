@@ -24,6 +24,7 @@ public class CareersPage {
             WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator)); // Wait for the element to be visible
             return element != null && element.isDisplayed(); // Return true if the element is displayed
         } catch (Exception e) {
+            System.err.println("Error in checking element visibility: " + e.getMessage()); // Log error
             return false;
         }
     }
@@ -33,7 +34,7 @@ public class CareersPage {
         try {
             return isElementDisplayed(locationsBlock);  // Try to check if the element is displayed
         } catch (Exception e) {
-            System.out.println("Error in checking Locations Block visibility: " + e.getMessage());  // Log error
+            System.err.println("Error in checking Locations Block visibility: " + e.getMessage());  // Log error
             return false;  // Return false in case of error
         }
     }
@@ -43,7 +44,7 @@ public class CareersPage {
         try {
             return isElementDisplayed(teamsBlock);  // Try to check if the element is displayed
         } catch (Exception e) {
-            System.out.println("Error in checking Teams Block visibility: " + e.getMessage());  // Log error
+            System.err.println("Error in checking Teams Block visibility: " + e.getMessage());  // Log error
             return false;  // Return false in case of error
         }
     }
@@ -53,7 +54,7 @@ public class CareersPage {
         try {
             return isElementDisplayed(lifeAtInsiderBlock);  // Try to check if the element is displayed
         } catch (Exception e) {
-            System.out.println("Error in checking Life at Insider Block visibility: " + e.getMessage());  // Log error
+            System.err.println("Error in checking Life at Insider Block visibility: " + e.getMessage());  // Log error
             return false;  // Return false in case of error
         }
     }

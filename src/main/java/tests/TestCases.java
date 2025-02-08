@@ -48,7 +48,6 @@ public class TestCases extends BaseTest {
     @Order(4)
     public void testJobApplication() {
         openPositionsPage.hoverAndClickViewRoleButton(); // Click the "View role" button
-
         String originalWindow = driver.getWindowHandle(); // Get the original window handle
 
         for (String windowHandle : driver.getWindowHandles()) {
@@ -59,7 +58,7 @@ public class TestCases extends BaseTest {
         }
 
         String currentUrl = driver.getCurrentUrl(); // Get the current URL
-        assertTrue(currentUrl.contains("jobs.lever.co/useinsider"), "Yönlendirilen URL doğru değil: " + currentUrl); // Check if the URL is correct
+        assertTrue(currentUrl.contains("jobs.lever.co/useinsider"), "The redirected URL is not correct: " + currentUrl); // Check if the URL is correct
     }
 
 }

@@ -26,8 +26,8 @@ public class QAJobsPage {
         try {
             WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator)); // Wait for the element to be clickable
             element.click(); // Click the element
-        } catch (TimeoutException e) {
-            System.out.println("Element not clickable: " + locator);
+        } catch (Exception e) {
+            System.err.println("Element not clickable: " + locator);
         }
     }
 

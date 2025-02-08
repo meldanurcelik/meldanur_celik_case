@@ -29,8 +29,8 @@ public class OpenPositionsPage {
             scrollToElement(driver, careerPositionList); // Scroll to the position list
             WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(careerPositionItem)); // Wait for the position list item
             return element.isDisplayed(); // Return true if the element is displayed
-        } catch (TimeoutException e) {
-            System.out.println("Position list item is NOT displayed: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Position list item is NOT displayed: " + e.getMessage()); // Log error
             return false; // Return false if the element is not displayed
         }
     }
@@ -52,7 +52,7 @@ public class OpenPositionsPage {
                 break;
             } catch (Exception e) {
                 // Retry: If the dropdown content does not load, try again
-                System.out.println("Dropdown did not load, trying again...");
+                System.err.println("Dropdown did not load, trying again...");
                 filterDropdown.click(); // Click the location dropdown
                 Thread.sleep(500); // Wait for 500 milliseconds
                 filterDropdown.click(); // Click the location dropdown again
@@ -73,10 +73,8 @@ public class OpenPositionsPage {
             } else {
                 System.out.println(department + " is not selected.");
             }
-        } catch (NoSuchElementException e) {
-            System.out.println("Dropdown element not found: " + e.getMessage());
         } catch (Exception e) {
-            System.out.println("An error occurred while validating the department selection: " + e.getMessage());
+            System.err.println("An error occurred while validating the department selection: " + e.getMessage()); // Log error
         }
     }
 
@@ -85,12 +83,8 @@ public class OpenPositionsPage {
             WebElement viewRoleButton = driver.findElement(viewRoleButtonX); // Find the "View role" button
             Actions actions = new Actions(driver); // Create an Actions object
             actions.moveToElement(viewRoleButton).click().perform(); // Hover over the element and click
-        } catch (NoSuchElementException e) {
-            System.out.println("View role button not found: " + e.getMessage());
-        } catch (ElementNotInteractableException e) {
-            System.out.println("Unable to interact with the view role button: " + e.getMessage());
         } catch (Exception e) {
-            System.out.println("An error occurred while hovering and clicking the view role button: " + e.getMessage());
+            System.err.println("An error occurred while hovering and clicking the view role button: " + e.getMessage()); // Log error
         }
     }
 

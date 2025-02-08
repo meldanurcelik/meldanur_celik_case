@@ -9,35 +9,14 @@ import java.time.Duration;
 public class ScrollUtil {
 
     public static void scrollToElement(WebDriver driver, By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // 10 saniyelik bekleme süresi
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5)); // The WebDriverWait object is initialized with a 5-second timeout
 
         try {
-            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator)); // Elementin görünmesini bekle
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element); // Elementi ortala
+            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator)); // Wait for the element to be visible
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element); // Scroll to the element
         } catch (TimeoutException e) {
-            System.out.println("Element bulunamadı veya görünür değil: " + locator);
+            System.out.println("Element not found or not visible: " + locator); // Print an error message if the element is not found or not visible
         }
-
-       // WebElement element = driver.findElement(locator); // Find the element
-       // JavascriptExecutor js = (JavascriptExecutor) driver; // Create a JavascriptExecutor object
-       // js.executeScript("arguments[0].scrollIntoView(true);", element); // Scroll to the element
-        //
-       // try {
-       //     Thread.sleep(1000);
-       // } catch (InterruptedException e) {
-       //     e.printStackTrace();
-       // }
-
-    }
-
-    public static void scrollDown(WebDriver driver) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0, 250);");
-    }
-
-    public static void scrollUp(WebDriver driver) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0, -250);");
     }
 
 }

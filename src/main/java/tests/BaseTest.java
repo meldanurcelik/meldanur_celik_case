@@ -30,7 +30,7 @@ public class BaseTest {
             WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver();
         } else {
-            throw new IllegalArgumentException("Geçersiz tarayıcı: " + browser);
+            throw new IllegalArgumentException("Invalid browser: " + browser);
         }
 
         driver.manage().window().maximize(); // Make the window full screen
@@ -51,9 +51,9 @@ public class BaseTest {
 
             try {
                 FileUtils.copyFile(srcFile, destFile); // Save the screenshot to the file path
-                System.out.println("Ekran görüntüsü kaydedildi: " + destFile.getAbsolutePath()); // Print the file path
+                System.out.println("Screenshot saved: " + destFile.getAbsolutePath()); // Print the file path
             } catch (IOException e) {
-                System.err.println("Ekran görüntüsü kaydedilirken hata oluştu: " + e.getMessage()); // Print an error message if the screenshot fails
+                System.err.println("An error occurred while saving the screenshot: " + e.getMessage()); // Print an error message if the screenshot fails
             }
         }
     }

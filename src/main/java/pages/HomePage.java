@@ -22,10 +22,10 @@ public class HomePage {
     public void open() {
         try {
             driver.get(URL);  // Open the home page
+            acceptCookieIfPresent();  // Accept the cookie if it is present
         } catch (Exception e) {
-            System.out.println("Error opening the home page: " + e.getMessage());  // Log the error if URL cannot be opened
+            System.err.println("Error opening the home page: " + e.getMessage());  // Log error
         }
-        acceptCookieIfPresent();  // Accept the cookie if it is present
     }
 
     // The method checks if the home page title is displayed
@@ -38,7 +38,7 @@ public class HomePage {
             WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));  // Wait for the element to be clickable
             element.click();  // Click the element
         } catch (Exception e) {
-            System.out.println("Error clicking element: " + e.getMessage());  // Catch any other exceptions and log them
+            System.err.println("Error clicking element: " + e.getMessage());  // Log error
         }
     }
 

@@ -22,8 +22,8 @@ public class CompanyPage {
         try {
             WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(menuLocator)); // Wait for the element to be clickable
             menu.click(); // Click the element
-        } catch (TimeoutException e) {
-            System.err.println("Menu not clickable: " + menuLocator); // Print an error message if the element is not clickable
+        } catch (Exception e) {
+            System.err.println("Error clicking Company Menu: " + e.getMessage()); // Log error
         }
     }
 
@@ -32,7 +32,7 @@ public class CompanyPage {
         try {
             clickMenu(companyMenu);  // Try to click the Company menu
         } catch (Exception e) {
-            System.out.println("Error clicking Company Menu: " + e.getMessage());  // Log error
+            System.err.println("Error clicking Company Menu: " + e.getMessage());  // Log error
         }
     }
 
@@ -41,7 +41,7 @@ public class CompanyPage {
         try {
             clickMenu(careersMenu);  // Try to click the Careers menu
         } catch (Exception e) {
-            System.out.println("Error clicking Careers Menu: " + e.getMessage());  // Log error
+            System.err.println("Error clicking Careers Menu: " + e.getMessage());  // Log error
         }
     }
 
